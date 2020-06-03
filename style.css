@@ -1,0 +1,92 @@
+@font-face {
+  font-family: pixie;
+  src: url(Pixeled.ttf); /* font from: https://www.dafont.com/pixeled.font */
+}
+
+body{
+    background-color: #1B102E;
+    text-align: center;
+    margin-top: 25px;
+}
+
+canvas{
+    outline: 3px dashed white;
+    position: relative;
+}
+/* other fun border properties: inset, outset, grooved, ridge, dotted, double*/
+
+/* color guide: */
+/* dark eggplant background - 1B102E */
+/* light eggplant shadow - 6D3756 */
+/* bright violet terrain - 5933F7 */
+/* midtone salmon player - DF6F4A */
+/* deep emerald creature - 025131 */
+
+#demo, #demo_reply, #score, #level, .button, #music {
+    color: white;
+    font-size: 1em;
+    font-family: pixie;
+}
+
+#dialogue {
+    color: aqua;
+    font-size: 2em;
+    font-family: pixie;
+}
+
+#title_screen {
+    /* TODO: html-ify the title screen and scoreboard */
+}
+
+#powers {
+    /* TODO: html-ify the spells */
+    color: aqua;
+    font-size: 0.9em;
+    font-family: pixie;
+}
+
+.container {
+    position: relative;
+}
+
+.overlay { /* rename to stats */
+    position: absolute;
+    left: 15px; /* change to left if needed */
+    top: 0px;
+    background-color: transparent;
+    z-index: 10;
+    outline: 3px dashed white;
+    width: 350px;
+    height: 400px;
+}
+.music {
+    position: absolute;
+    left: 15px;
+    top: 425px; /* could also be measured from bottom */
+    z-index: 10;
+    outline: 3px dashed white;
+    width: 350px;
+    height: 150px;
+}
+.button {
+  background-color: deeppink; /* pink */
+  border: 0;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  border-radius: 5%; /* https://www.w3schools.com/css/css3_buttons.asp */
+}
+.prose { 
+    position: absolute;
+    right: 15px; /* change to left if needed */
+    top: 0px;
+    background-color: transparent;
+    z-index: 10;
+    outline: 3px dashed white;
+    width: 350px;
+    height: 575px;
+}
+/* TODO: a neat dashboard layout with music (and sound) controls, dialogue and lore, bigger map, more monsters, honestly not too sure about spells but ok

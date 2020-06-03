@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <title>Drawlike - An "I Can't Draw" Broughlike</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+    
+<body>
+
+<div class="container">
+    <div class="overlay">
+        <p id="score">Score: 0</p>
+        <p id="level">Level: 1</p>
+        <p id="powers">...</p>
+    </div>
+    
+    <div class="music">
+        <p id="music">Music</p>
+        <audio preload="auto" id="soundtrack">
+            <!-- <source src="track.ogg" type="audio/ogg" /> -->
+            <source src="audio/bumpinandbloopin.mp3" type="audio/mpeg"/>
+            Your browser does not support the audio element.
+        </audio>
+        <!-- TODO: refresh self on audio controls
+        https://webdesign.tutsplus.com/tutorials/create-a-customized-html5-audio-player--webdesign-7081
+        -->
+        <button class="button" onclick="playAudio()" type="button">▶</button>
+        <button class="button" onclick="pauseAudio()" type="button">x</button> 
+
+        <script>
+            var music = document.getElementById("soundtrack"); 
+
+            function playAudio() { 
+                music.play(); 
+            } 
+
+            function pauseAudio() { 
+                music.pause(); 
+            } 
+        </script>
+    </div>
+    <div class="prose">
+        <p id="demo"></p> <!-- change demo to prose or text or w/e -->
+        <p id="demo_reply"></p>
+        <p id="dialogue"></p>
+    </div>
+    
+<canvas></canvas>
+    <script src="js/game.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/tile.js"></script>
+    <script src="js/monster.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/spell.js"></script>
+    <script src="js/fruit.js"></script>
+<script>
+    tileSize = 64; // how big a tile should be in on screen pixels - halve for bigger
+    numTiles = 9; // how wide/tall our map will be measured in tiles - double for bigger
+    uiWidth = 0; // how much space we should reserve for the game UI - increase for more reading space - nice symmetry with numtiles if the same
+    level = 1; // starts us on the first level, establishing that there are levels
+    maxHp = 6; // maximum health of any given actor
+    
+    spritesheet = new Image(); // loading our spritesheet
+    spritesheet.src = 'spritesheet.png';
+    spritesheet.onload = showTitle; // starts us on a title screen
+                             
+    gameState = "loading";  
+
+    startingHp = 3; // starting points
+    numLevels = 6; // total levels, which could be interesting to mess with
+    
+    shakeAmount = 0; // screenshake      
+    shakeX = 0;                 
+    shakeY = 0;
+
+    // wasd controls; definitely works
+    document.querySelector("html").onkeypress = function(e){
+        if(gameState == "title"){                              
+            startGame();
+        }else if(gameState == "dead"){                             
+            showTitle();                                        
+        }else if(gameState == "running"){
+        if(e.key=="w") player.tryMove(0, -1);
+        if(e.key=="s") player.tryMove(0, 1);
+        if(e.key=="a") player.tryMove(-1, 0);
+        if(e.key=="d") player.tryMove(1, 0);
+        
+        if(e.key>=1 && e.key<=9) player.castSpell(e.key-1); // spells
+        }
+    };
+    
+    // additional arrow controls; it works!!! i figured this out myself!!!
+    // internet said onkeyDOWN works for arrows but not onkeyPRESS
+    // also requires specifying that arrows have a keyCODE
+    // TODO: maybe redunant, could fold into function e?
+    document.querySelector("html").onkeydown = function(f){
+        if(gameState == "title"){                              
+            startGame();                
+        }else if(gameState == "dead"){                             
+            showTitle();                                        
+        }else if(gameState == "running"){
+        if(f.keyCode=="38") player.tryMove(0, -1);
+        if(f.keyCode=="40") player.tryMove(0, 1);
+        if(f.keyCode=="37") player.tryMove(-1, 0);
+        if(f.keyCode=="39") player.tryMove(1, 0);
+        }
+    };
+
+    setInterval(draw, 15);
+    
+    setupCanvas(); // defined in game.js
+    
+    initSounds();
+</script>
+
+</div> <!-- closing container -->
+    
+</body>
+</html>
